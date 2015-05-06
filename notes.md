@@ -1,0 +1,1 @@
+example for a group filter: (memberof=cn=All-Employees,ou=groups,dc=boisestate,dc=edu,o=vault)
