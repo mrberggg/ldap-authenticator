@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/mrberggg/ldap-authenticator.svg?branch=master)](https://travis-ci.org/mrberggg/ldap-authenticator)
 LDAP Authenticator
 ================
 This package adds quick support for LDAP authentication. It includes support for Laravel 5.
