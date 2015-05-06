@@ -1,5 +1,5 @@
 {
-    "name": "berg/ldap",
+    "name": "berg/ldap-authenticator",
     "description": "A package for quickly setting up LDAP authentication",
     "keywords": [ "LDAP", "laravel" ],
     "homepage": "https://github.com/mrberggg/php-ldap-authenticator",
@@ -24,7 +24,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Berg\\LDAPAuthenticator\\": "src"
+            "Berg\\LdapAuthenticator\\": "src"
         }
     }
 }

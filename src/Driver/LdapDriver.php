@@ -1,4 +1,4 @@
-<?php namespace Berg\LdapAuthenticator\Auth;
+<?php namespace Berg\LdapAuthenticator\Driver;
 
 
 class LdapDriver implements DriverInterface
@@ -49,7 +49,9 @@ class LdapDriver implements DriverInterface
 
     public function __destruct()
     {
-        ldap_unbind($this->connection);
+        if($this->connection){
+            ldap_unbind($this->connection);
+        }
     }
 
 }

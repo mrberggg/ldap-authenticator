@@ -1,22 +1,21 @@
-php-ldap-authenticator
+LDAP Authenticator
 ================
-This package adds quick support for LDAP authentication.
+This package adds quick support for LDAP authentication. It includes support for Laravel 5.
 
 Installation
 ------------
-Use [Composer](https://packagist.org/packages/berg/ldap "Composer Link")
-
+`composer require berg/ldap-authenticator`
 
 Laravel Config
 ---------------------
-This package comes with a driver to support quick setup using Laravel (v4.* supported for now, hope to add v5.* support soon). To set up, first install the package and then register the driver using the following code (can be placed in global.php):
+This package comes with a driver to support quick setup using Laravel 5. To set up, first install the package and then register the driver by placing the following code in the AppServiceProvider's boot method:
 
     Auth::extend('ldap', function($app) {
-        $userProvider = new Berg\LDAPAuthenticator\LdapUserProvider();
-        return new Illuminate\Auth\Guard($userProvider, $app->make('Illuminate\Session\Store'));
+        $userProvider = new LdapUserProvider();
+        return new Guard($userProvider, $app->make('Illuminate\Session\Store'));
     });
 
-Then create a file named ldap.php in the /app/config/ folder. The file should return an array with the following values:
+Then create a file named ldap.php in the config/ folder. The file should return an array with the following values:
 
     'hostname' => '',
     'port' => '',
@@ -27,7 +26,7 @@ Then create a file named ldap.php in the /app/config/ folder. The file should re
     'group_dn' => '',
     'search_scope' => ''
 
-Lastly set the driver in the `app/config/auth.php` file to `ldap`.
+Lastly set the driver in the `config/auth.php` file to `ldap`.
 
 If you wish to use the class for non-authentication tasks such as checking if a user exists, you may also use the built in service provider by adding the following line to the `app.php` config file:
 

@@ -7,7 +7,6 @@ use Illuminate\Support\ServiceProvider;
 
 class LdapServiceProvider extends ServiceProvider
 {
-
     public function register()
     {
         $this->app->bind('LDAPAuthenticateService', function ($app) {

@@ -1,4 +1,4 @@
-<?php namespace Berg\LdapAuthenticator\Auth;
+<?php namespace Berg\LdapAuthenticator\Driver;
 
 
 interface DriverInterface

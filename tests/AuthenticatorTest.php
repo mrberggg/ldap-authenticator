@@ -1,30 +1,54 @@
 <?php
 
 use Berg\LdapAuthenticator\Authenticator;
+use \Mockery as m;
 
 class AuthenticatorTest extends PHPUnit_Framework_TestCase {
 
-    protected $authenticator;
-
-    public function setUp()
+    public function testInvalidCredentials()
     {
-        $driver = new TestDriver();
-        $params = array(
-            'hostname'      => '',
-            'port'          => '',
-            'security'      => '',
-            'bind_dn'       => '',
-            'bind_password' => '',
-            'base_dn'       => '',
-            'group_dn'      => '',
-            'search_scope'  => ''
-        );
-        $this->authenticator = new Authenticator($params, $driver);
+        $this->setExpectedException('Berg\LdapAuthenticator\Exceptions\InvalidCredentialsException');
+        $driver = m::mock('Berg\LdapAuthenticator\Driver\LdapDriver');
+        $driver->shouldReceive('validate')->andReturn(false);
+        $authenticator = new Authenticator($driver);
+        $authenticator->authenticate('username', 'password');
     }
 
-    public function testTest()
+    public function testUserDoesNotExist()
     {
-        $this->assertTrue(true);
+        $this->setExpectedException('Berg\LdapAuthenticator\Exceptions\UserDoesNotExistException');
+        $driver = m::mock('Berg\LdapAuthenticator\Driver\LdapDriver');
+        $driver->shouldReceive('validate')->andReturn(true);
+        $driver->shouldReceive('doesUserExist')->andReturn(false);
+        $authenticator = new Authenticator($driver);
+        $authenticator->authenticate('username', 'password');
+    }
+
+    public function testAuthenticationFails()
+    {
+        $this->setExpectedException('Berg\LdapAuthenticator\Exceptions\IncorrectCredentialsException');
+        $driver = m::mock('Berg\LdapAuthenticator\Driver\LdapDriver');
+        $driver->shouldReceive('validate')->andReturn(true);
+        $driver->shouldReceive('doesUserExist')->andReturn(true);
+        $driver->shouldReceive('authenticate')->andReturn(false);
+        $authenticator = new Authenticator($driver);
+        $authenticator->authenticate('username', 'password');
+    }
+
+    public function testValidLogin()
+    {
+        $driver = m::mock('Berg\LdapAuthenticator\Driver\LdapDriver');
+        $driver->shouldReceive('validate')->andReturn(true);
+        $driver->shouldReceive('doesUserExist')->andReturn(true);
+        $driver->shouldReceive('authenticate')->andReturn(true);
+        $authenticator = new Authenticator($driver);
+        $authenticated = $authenticator->authenticate('username', 'password');
+        $this->assertTrue($authenticated);
+    }
+
+    public function tearDown()
+    {
+        m::close();
     }
 
 }
