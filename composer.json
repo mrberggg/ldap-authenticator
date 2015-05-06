@@ -1,8 +1,8 @@
 {
     "name": "berg/ldap-authenticator",
     "description": "A package for quickly setting up LDAP authentication",
-    "keywords": [ "LDAP", "laravel" ],
-    "homepage": "https://github.com/mrberggg/php-ldap-authenticator",
+    "keywords": [ "LDAP", "PHP", "laravel" ],
+    "homepage": "https://github.com/mrberggg/ldap-authenticator",
     "license": "MIT",
     "minimum-stability": "dev",
     "authors": [
@@ -16,8 +16,8 @@
         "php": ">=5.5.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "4.0.14",
-        "mockery/mockery": "0.9.0",
+        "phpunit/phpunit": "4.0.*",
+        "mockery/mockery": "0.9.*",
         "illuminate/support": "5.*",
         "illuminate/auth": "5.*"
     },
