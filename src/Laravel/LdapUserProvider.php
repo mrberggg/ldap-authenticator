@@ -1,21 +1,20 @@
 <?php namespace Berg\LdapAuthenticator\Laravel;
 
 use Berg\LdapAuthenticator\Authenticator;
+use Berg\LdapAuthenticator\Driver\LdapDriver;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Log\Writer as Logger;
-use Monolog\Logger as Monolog;
 
 class LdapUserProvider implements UserProvider {
 
     public function __construct()
     {
         $this->model = App::make(Config::get('auth.model'));
-        $monolog = new Monolog('ldap_user');
-        $logger = new Logger($monolog);
-        $this->auth = new Authenticator(Config::get('ldap'), $logger);
+        $config = Config::get('ldap');
+        $ldapDriver = new LdapDriver($config);
+        $this->auth = new Authenticator($ldapDriver);
     }
 
     public function validateCredentials(Authenticatable $user, array $credentials)

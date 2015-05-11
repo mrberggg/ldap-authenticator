@@ -1,6 +1,6 @@
 <?php namespace Berg\LdapAuthenticator\Laravel;
 
-use Berg\LdapAuthenticator\Auth\LdapDriver;
+use Berg\LdapAuthenticator\Driver\LdapDriver;
 use Berg\LdapAuthenticator\Authenticator;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
