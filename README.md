@@ -31,10 +31,10 @@ Lastly set the driver in the `config/auth.php` file to `ldap`.
 
 If you wish to use the class for non-authentication tasks such as checking if a user exists, you may also use the built in service provider by adding the following line to the `app.php` config file:
 
-    'Berg\LDAPAuthenticator\LdapServiceProvider'
+    'Berg\LdapAuthenticator\Laravel\LdapServiceProvider'
 
 Usage
 ---------------------
 Once set up, using the Auth::attempt($username, $password) will automatically call on the ldap driver.
 
-To use the service provider, call `App::make('LDAPAuthenticateService')`
+To use the service provider, call `App::make('LdapAuthenticateService')`
