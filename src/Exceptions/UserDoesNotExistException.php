@@ -2,6 +2,4 @@
 
 use Exception;
 
-class UserDoesNotExistException extends Exception{
-
-}
+class UserDoesNotExistException extends Exception{}

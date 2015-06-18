@@ -5,7 +5,8 @@ use Berg\LdapAuthenticator\Driver\LdapDriver;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
 
-class LdapUserProvider implements UserProvider {
+class LdapUserProvider implements UserProvider
+{
 
     public function __construct()
     {

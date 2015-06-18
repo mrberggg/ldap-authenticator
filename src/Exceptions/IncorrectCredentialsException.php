@@ -2,6 +2,4 @@
 
 use Exception;
 
-class IncorrectCredentialsException extends Exception {
-
-}
+class IncorrectCredentialsException extends Exception {}
