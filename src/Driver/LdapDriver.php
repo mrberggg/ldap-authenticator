@@ -1,6 +1,8 @@
 <?php namespace Berg\LdapAuthenticator\Driver;
 
 
+use Berg\LdapAuthenticator\Exceptions\ConfigNotSetException;
+
 class LdapDriver implements DriverInterface
 {
     protected $config;
@@ -8,6 +10,9 @@ class LdapDriver implements DriverInterface
 
     public function __construct($config)
     {
+        if(!$config){
+            throw new ConfigNotSetException;
+        }
         $this->config = $config;
         $this->connection = $this->getConnection();
     }

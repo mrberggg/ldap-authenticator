@@ -4,15 +4,13 @@ use Berg\LdapAuthenticator\Authenticator;
 use Berg\LdapAuthenticator\Driver\LdapDriver;
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\UserProvider;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Config;
 
 class LdapUserProvider implements UserProvider {
 
     public function __construct()
     {
-        $this->model = App::make(Config::get('auth.model'));
-        $config = Config::get('ldap');
+        $this->model = app(config('auth.model'));
+        $config = config('ldap');
         $ldapDriver = new LdapDriver($config);
         $this->auth = new Authenticator($ldapDriver);
     }
