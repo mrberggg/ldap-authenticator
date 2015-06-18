@@ -1,9 +1,16 @@
 <?php
 
 use Berg\LdapAuthenticator\Authenticator;
+use Berg\LdapAuthenticator\Driver\LdapDriver;
 use \Mockery as m;
 
-class AuthenticatorTest extends PHPUnit_Framework_TestCase {
+class AuthenticatorTest extends PHPUnit_Framework_TestCase
+{
+    public function testInvalidConfiguration()
+    {
+        $this->setExpectedException('Berg\LdapAuthenticator\Exceptions\ConfigNotSetException');
+        new LdapDriver(null);
+    }
 
     public function testInvalidCredentials()
     {
