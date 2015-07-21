@@ -1,20 +1,32 @@
-<?php namespace Berg\LdapAuthenticator\Driver;
+<?php
 
+namespace Berg\LdapAuthenticator\Driver;
 
-use Berg\LdapAuthenticator\Exceptions\ConfigNotSetException;
+use Zend\Authentication\Adapter\Ldap as AuthAdapter;
+use Zend\Authentication\AuthenticationService;
+use Zend\Ldap\Ldap;
+use Zend\Session\Storage\StorageInterface;
 
 class LdapDriver implements DriverInterface
 {
+    protected $ldap;
     protected $config;
-    protected $connection;
 
     public function __construct($config)
     {
-        if(!$config){
+        if (!$config) {
             throw new ConfigNotSetException;
         }
+
         $this->config = $config;
-        $this->connection = $this->getConnection();
+        $this->ldap = new Ldap([
+            'host'        => $config['host'],
+            'useStartTls' => $config['security'] === 'TLS',
+            'useSsl'      => $config['security'] === 'SSL',
+            'baseDn'      => $config['baseDn'],
+            'username'    => $config['username'],
+            'password'    => $config['password']
+        ]);
     }
 
     public function validate($username, $password)
@@ -24,39 +36,43 @@ class LdapDriver implements DriverInterface
 
     public function authenticate($username, $password)
     {
-        $userDn = $this->getDnForUser($username);
+        $userDn = $this->getUserDn($username);
+        $adapter = new AuthAdapter([$this->ldap->getOptions()], $userDn, $password);
+        $auth = new AuthenticationService();
 
-        return (bool) @ldap_bind($this->connection, $userDn, $password);
+        return $auth->authenticate($adapter)->isValid();
     }
 
     public function doesUserExist($username)
     {
-        $dn = $this->getDnForUser($username);
-        $searchScope = $this->config['search_scope'] ?: '(objectclass=*)';
+        $dn = $this->getUserDn($username);
+        $searchScope = (array) $this->config['searchScope'] ?: ['(objectclass=*)'];
 
-        return (bool) @ldap_search($this->connection, $dn, $searchScope);
-    }
-
-    protected function getConnection()
-    {
-        $hostname = $this->config['hostname'];
-        if ($this->config['security'] === 'SSL') {
-            $hostname = 'ldaps://' . $hostname;
+        foreach($searchScope as $scope){
+            $search = $this->ldap->search($scope, $dn);
+            foreach($search as $item){
+                // If contains cn, make sure cn = our username. If it does, user exists
+                $cn = isset($item['cn']) ? strtolower($item['cn'][0]) : null;
+                if($cn === $username){
+                    return true;
+                }
+            }
         }
 
-        return @ldap_connect($hostname, $this->config['port']);
+        return false;
     }
 
-    protected function getDnForUser($username)
+    protected function getUserDn($username)
     {
-        return 'cn=' . $username . ',' . $this->config['base_dn'];
-    }
-
-    public function __destruct()
-    {
-        if($this->connection){
-            ldap_unbind($this->connection);
+        $search = $this->ldap->search('(cn=' . $username . ')', $this->config['baseDn']);
+        foreach ($search as $item) {
+            if ($item['dn']) {
+                // Return first found (best solution? might need to update)
+                return $item['dn'];
+            }
         }
+
+        return null;
     }
 
 }

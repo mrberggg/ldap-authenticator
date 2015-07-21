@@ -1,4 +1,6 @@
-<?php namespace Berg\LdapAuthenticator;
+<?php
+
+namespace Berg\LdapAuthenticator;
 
 use Berg\LdapAuthenticator\Driver\DriverInterface;
 use Berg\LdapAuthenticator\Exceptions\IncorrectCredentialsException;

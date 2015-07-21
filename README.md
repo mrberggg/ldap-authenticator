@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/mrberggg/ldap-authenticator.svg?branch=master)](https://travis-ci.org/mrberggg/ldap-authenticator)
 # LDAP Authenticator
-This package adds quick support for LDAP authentication. It includes support for Laravel 5.
+This package adds quick support for LDAP authentication using Zend Frameowork's LDAP authentication package. It includes support for Laravel 5.
 
 ## Installation
 `composer require berg/ldap-authenticator`
@@ -15,14 +15,12 @@ This package comes with a driver to support quick setup using Laravel 5. To set 
 
 Then create a file named ldap.php in the config/ folder. The file should return an array with the following values:
 
-    'hostname' => '',
-    'port' => '',
-    'security' => '', // E.g. SSL
-    'bind_dn' => '',
-    'bind_password' => '',
-    'base_dn' => '',
-    'group_dn' => '',
-    'search_scope' => ''
+    'hostname'      => '',
+    'port'          => 636,
+    'security'      => 'SSL',
+    'base_dn'       => '',
+    'bind_dn'       => '',
+    'bind_password' => ''
 
 Lastly set the driver in the `config/auth.php` file to `ldap`.
 

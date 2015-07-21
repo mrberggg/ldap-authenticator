@@ -1,16 +1,21 @@
-<?php namespace Berg\LdapAuthenticator\Laravel;
+<?php
 
-use Berg\LdapAuthenticator\Driver\LdapDriver;
+namespace Berg\LdapAuthenticator\Laravel;
+
 use Berg\LdapAuthenticator\Authenticator;
+use Berg\LdapAuthenticator\Driver\LdapDriver;
 use Illuminate\Support\ServiceProvider;
+use Zend\Authentication\AuthenticationService;
+use Zend\Authentication\Storage\Session;
 
 class LdapServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->bind('LDAPAuthenticateService', function ($app) {
-            $driver = new LdapDriver(config('ldap'));
-            return new Authenticator($driver);
+        $this->app->bind('LdapAuthenticateService', function ($app) {
+            $ldapDriver = new LdapDriver(config('ldap'));
+
+            return new Authenticator($ldapDriver);
         });
     }
 }

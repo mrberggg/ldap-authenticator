@@ -1,6 +1,10 @@
-<?php namespace Berg\LdapAuthenticator\Exceptions;
+<?php
 
+namespace Berg\LdapAuthenticator\Exceptions;
 
 use Exception;
 
-class ConfigNotSetException extends Exception {}
+class ConfigNotSetException extends Exception
+{
+
+}

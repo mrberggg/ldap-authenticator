@@ -1,5 +1,10 @@
-<?php namespace Berg\LdapAuthenticator\Exceptions;
+<?php
+
+namespace Berg\LdapAuthenticator\Exceptions;
 
 use Exception;
 
-class IncorrectCredentialsException extends Exception {}
+class IncorrectCredentialsException extends Exception
+{
+
+}
