@@ -46,17 +46,14 @@ class LdapDriver implements DriverInterface
 
     public function doesUserExist($username)
     {
-        $dn = $this->getUserDn($username);
-        $searchScope = (array) $this->config['searchScope'] ?: ['(objectclass=*)'];
+        $searchScope = $this->config['searchScope'] ?: '(objectclass=*)';
 
-        foreach($searchScope as $scope){
-            $search = $this->ldap->search($scope, $dn);
-            foreach($search as $item){
-                // If contains cn, make sure cn = our username. If it does, user exists
-                $cn = isset($item['cn']) ? strtolower($item['cn'][0]) : null;
-                if($cn === $username){
-                    return true;
-                }
+        $search = $this->ldap->search('(cn=' . $username . ')', $this->config['baseDn'], $searchScope);
+        foreach($search as $item){
+            // If contains cn, make sure cn = our username. If it does, user exists
+            $cn = isset($item['cn']) ? strtolower($item['cn'][0]) : null;
+            if($cn === $username){
+                return true;
             }
         }
 
