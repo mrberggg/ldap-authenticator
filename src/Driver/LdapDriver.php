@@ -2,6 +2,7 @@
 
 namespace Berg\LdapAuthenticator\Driver;
 
+use Berg\LdapAuthenticator\Exceptions\ConfigNotSetException;
 use Zend\Authentication\Adapter\Ldap as AuthAdapter;
 use Zend\Authentication\AuthenticationService;
 use Zend\Ldap\Ldap;
