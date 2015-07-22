@@ -2,7 +2,6 @@
 
 namespace Berg\LdapAuthenticator\Driver;
 
-
 interface DriverInterface
 {
     // Validate data

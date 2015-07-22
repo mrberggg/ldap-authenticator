@@ -6,7 +6,6 @@ use Berg\LdapAuthenticator\Exceptions\ConfigNotSetException;
 use Zend\Authentication\Adapter\Ldap as AuthAdapter;
 use Zend\Authentication\AuthenticationService;
 use Zend\Ldap\Ldap;
-use Zend\Session\Storage\StorageInterface;
 
 class LdapDriver implements DriverInterface
 {

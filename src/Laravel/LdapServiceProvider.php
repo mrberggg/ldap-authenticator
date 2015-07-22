@@ -5,8 +5,6 @@ namespace Berg\LdapAuthenticator\Laravel;
 use Berg\LdapAuthenticator\Authenticator;
 use Berg\LdapAuthenticator\Driver\LdapDriver;
 use Illuminate\Support\ServiceProvider;
-use Zend\Authentication\AuthenticationService;
-use Zend\Authentication\Storage\Session;
 
 class LdapServiceProvider extends ServiceProvider
 {
