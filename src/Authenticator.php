@@ -20,6 +20,7 @@ class Authenticator
     public function authenticate($username, $password)
     {
         // Is data valid?
+        $username = strtolower($username);
         if (!$this->driver->validate($username, $password)){
             throw new InvalidCredentialsException;
         }
@@ -37,6 +38,7 @@ class Authenticator
 
     public function doesUserExist($username)
     {
+        $username = strtolower($username);
         return $this->driver->doesUserExist($username);
     }
 
